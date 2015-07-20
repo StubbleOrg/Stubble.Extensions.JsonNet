@@ -10,16 +10,39 @@ namespace Stubble.Extensions.JsonNet
 {
     public static class JsonNet
     {
-        public static IStubbleBuilder AddJsonNet(this IStubbleBuilder builder)
+        internal static readonly IDictionary<Type, Func<object, string, object>> ValueGetters = new Dictionary<Type, Func<object, string, object>>
         {
-            return builder
-                .AddValueGetter(typeof (JObject), (value, key) =>
+            { 
+                typeof (JObject), (value, key) =>
                 {
                     var token = (JObject)value;
-                    var jValue = (JValue)token[key];
+                    var childToken = token[key];
+
+                    if (childToken == null) return null;
+
+                    switch (childToken.Type)
+                    {
+                        case JTokenType.Array:
+                        case JTokenType.Object:
+                        case JTokenType.Property:
+                            return childToken;
+                    }
+
+                    var jValue = childToken as JValue;
 
                     return jValue != null ? jValue.Value : null;
-                });
+                }
+            },
+        };
+
+        public static IStubbleBuilder AddJsonNet(this IStubbleBuilder builder)
+        {
+            foreach (var getter in ValueGetters)
+            {
+                builder.AddValueGetter(getter);
+            }
+
+            return builder;
         }
     }
 }
