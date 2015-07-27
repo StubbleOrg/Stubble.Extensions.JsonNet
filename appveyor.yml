@@ -45,7 +45,8 @@ test_script:
     iex $openCoverExe;
     iex $coverallsExe;
 artifacts:
-- path: Stubble\bin\$(Configuration)\Stubble.Extensions.JsonNet.dll
+- path: Stubble.Extensions.JsonNet\bin\$(Configuration)\Stubble.Extensions.JsonNet.dll
+- path: .\coverage.xml
 deploy:
 - provider: NuGet
   api_key:

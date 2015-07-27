@@ -2,8 +2,8 @@
 
 [![Build status](https://img.shields.io/appveyor/ci/Romanx/stubble-extensions-jsonnet.svg?style=flat-square)](https://ci.appveyor.com/project/Romanx/stubble-extensions-jsonnet)
 [![Coverage Status](https://img.shields.io/coveralls/StubbleOrg/Stubble.Extensions.JsonNet.svg?style=flat-square)](https://coveralls.io/r/StubbleOrg/Stubble.Extensions.JsonNet)
-[![Prerelease Nuget](https://img.shields.io/nuget/vpre/Stubble.Extensions.JsonNet.svg?style=flat-square&label=nuget%20pre)](https://www.nuget.org/packages/Stubble.Core/)
-[![Stable Nuget](https://img.shields.io/nuget/v/Stubble.Extensions.JsonNet.svg?style=flat-square)](https://www.nuget.org/packages/Stubble.Core/)
+[![Prerelease Nuget](https://img.shields.io/nuget/vpre/Stubble.Extensions.JsonNet.svg?style=flat-square&label=nuget%20pre)](https://www.nuget.org/packages/Stubble.Extensions.JsonNet/)
+[![Stable Nuget](https://img.shields.io/nuget/v/Stubble.Extensions.JsonNet.svg?style=flat-square)](https://www.nuget.org/packages/Stubble.Extensions.JsonNet/)
 
 
 This repository contains easy to use extensions for interacting with Newtonsoft Json.Net.
