@@ -12,7 +12,7 @@ namespace Stubble.Extensions.JsonNet
     {
         internal static readonly IDictionary<Type, Func<object, string, object>> ValueGetters = new Dictionary<Type, Func<object, string, object>>
         {
-            { 
+            {
                 typeof (JObject), (value, key) =>
                 {
                     var token = (JObject)value;
