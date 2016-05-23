@@ -68,12 +68,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Stubble.Extensions.JsonNet\Stubble.Extensions.JsonNet.csproj">
-      <Project>{444dc8a5-2981-4382-9075-3ca0929069cd}</Project>
-      <Name>Stubble.Extensions.JsonNet</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
