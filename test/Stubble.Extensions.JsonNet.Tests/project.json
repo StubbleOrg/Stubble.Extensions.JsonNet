@@ -3,9 +3,6 @@
     "dependencies": {
         "xunit": "2.1.0",
         "dotnet-test-xunit": "1.0.0-rc2-build10015",
-        "Stubble.Extensions.JsonNet": {
-            "target": "project"
-        },
         "OpenCover": {
             "version": "4.6.519",
             "type": "build"
@@ -13,6 +10,9 @@
         "coveralls.net": {
             "version": "0.6.0",
             "type": "build"
+        },
+        "Stubble.Extensions.JsonNet": {
+            "target": "project"
         }
     },
     "testRunner": "xunit",
