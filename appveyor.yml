@@ -25,9 +25,9 @@ build_script:
 after_test:
 - ps: >-
     if($env:verion_suffix) {
-        dotnet --verbose pack .\src\Stubble.Core\ -o .\out --version-suffix $env:verion_suffix
+        dotnet --verbose pack .\src\Stubble.Extensions.JsonNet\ -o .\out --version-suffix $env:verion_suffix
     } else {
-        dotnet --verbose pack .\src\Stubble.Core\ -o .\out
+        dotnet --verbose pack .\src\Stubble.Extensions.JsonNet\ -o .\out
     }
 artifacts:
 - path: .\out\*.nupkg
@@ -38,7 +38,7 @@ test_script:
     $OpenCover_Location = Get-ChildItem ($Package_Locations + "\OpenCover*\*\tools") | Select-Object -First 1 -ExpandProperty FullName;
     $CoverallsNet_Location = Get-ChildItem ($Package_Locations + "\coveralls.net\*\tools") | Select-Object -First 1 -ExpandProperty FullName;
 
-    $openCoverExe = "$OpenCover_Location\OpenCover.Console.exe -register:user -target:""dotnet.exe"" ""-targetargs:test .\test\Stubble.Core.Tests --framework netcoreapp1.0 -appveyor"" -filter:""+[Stubble.*]*"" -skipautoprops -output:coverage.xml";
+    $openCoverExe = "$OpenCover_Location\OpenCover.Console.exe -register:user -target:""dotnet.exe"" ""-targetargs:test .\test\Stubble.Extensions.JsonNet.Tests --framework netcoreapp1.0 -appveyor"" -filter:""+[Stubble.*]*"" -skipautoprops -output:coverage.xml";
     $coverallsExe = "$CoverallsNet_Location\csmacnz.Coveralls.exe --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage ""$env:APPVEYOR_REPO_COMMIT_MESSAGE"" --jobId $env:APPVEYOR_JOB_ID";
 
     iex $openCoverExe;
