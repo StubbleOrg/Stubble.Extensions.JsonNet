@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CC4D5ED9-FE1C-4F69-B392-EAEB48E6D850}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{84A5C938-F00D-4036-8AB2-9E92230292D3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Stubble.Extensions.JsonNet", "src\Stubble.Extensions.JsonNet\Stubble.Extensions.JsonNet.xproj", "{BFA1B90F-BB5A-466D-AA4E-7D473632134D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{ECF797BD-6141-4975-A00B-5C7F76909F97}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Stubble.Extensions.JsonNet.Tests", "test\Stubble.Extensions.JsonNet.Tests\Stubble.Extensions.JsonNet.Tests.xproj", "{6330DBE7-3159-42E7-980A-BA758CDB5E23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stubble.Extensions.JsonNet", "src\Stubble.Extensions.JsonNet\Stubble.Extensions.JsonNet.csproj", "{BFA1B90F-BB5A-466D-AA4E-7D473632134D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stubble.Extensions.JsonNet.Tests", "test\Stubble.Extensions.JsonNet.Tests\Stubble.Extensions.JsonNet.Tests.csproj", "{6330DBE7-3159-42E7-980A-BA758CDB5E23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
