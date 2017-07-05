@@ -87,15 +87,10 @@ namespace Stubble.Extensions.JsonNet.Tests
         [Fact]
         public void It_Handles_DateTimes_Correctly()
         {
-            var jsonSettings = new JsonSerializerSettings
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            };
-
-            var obj = JsonConvert.DeserializeObject("{ foo: \"2009-02-15T00:00:00Z\" }", jsonSettings);
+            var obj = JsonConvert.DeserializeObject("{ foo: \"2009-02-15T00:00:00Z\" }");
 
             var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo");
-            Assert.Equal(DateTime.Parse("2009-02-15T00:00:00Z"), value);
+            Assert.Equal(DateTime.Parse("2009-02-15T00:00:00Z").ToUniversalTime(), value);
         }
 
         [Fact]
