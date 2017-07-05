@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		build.cake = build.cake
 		readme.md = readme.md
+		src\Stubble.Extensions.JsonNet\version.json = src\Stubble.Extensions.JsonNet\version.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{84A5C938-F00D-4036-8AB2-9E92230292D3}"
