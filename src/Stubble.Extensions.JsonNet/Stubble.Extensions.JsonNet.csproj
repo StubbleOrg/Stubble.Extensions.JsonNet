@@ -10,7 +10,7 @@
     <PackageLicenseUrl>https://github.com/StubbleOrg/Stubble.Extensions.JsonNet/blob/master/licence.md</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StubbleOrg/Stubble.Extensions.JsonNet</RepositoryUrl>
-    <IconUrl>https://raw.githubusercontent.com/StubbleOrg/Stubble/dev/assets/extension-logo-64.png</IconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/StubbleOrg/Stubble/dev/assets/extension-logo-64.png</PackageIconUrl>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
