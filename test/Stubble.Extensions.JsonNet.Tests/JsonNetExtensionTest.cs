@@ -1,8 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Stubble.Core;
 using Xunit;
+using Stubble.Core.Builders;
 
 namespace Stubble.Extensions.JsonNet.Tests
 {

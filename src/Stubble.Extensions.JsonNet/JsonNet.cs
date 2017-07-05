@@ -5,12 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Stubble.Core.Interfaces;
+using Stubble.Core.Settings;
 
 namespace Stubble.Extensions.JsonNet
 {
     public static class JsonNet
     {
-        internal static readonly IDictionary<Type, Func<object, string, object>> ValueGetters = new Dictionary<Type, Func<object, string, object>>
+        public static IRendererSettingsBuilder<IStubbleBuilder<T>> AddJsonNet<T>(this IRendererSettingsBuilder<IStubbleBuilder<T>> builder)
+        {
+            foreach(var getter in ValueGetters)
+            {
+                builder.AddValueGetter(getter.Key, getter.Value);
+            }
+
+            return builder;
+        }
+
+        public static IStubbleBuilder<T> AddJsonNet<T>(this IStubbleBuilder<T> builder)
+        {
+            var settingsBuilder = builder as IRendererSettingsBuilder<IStubbleBuilder<T>>;
+            settingsBuilder.AddJsonNet();
+            return builder;
+        }
+
+        internal static readonly Dictionary<Type, Func<object, string, object>> ValueGetters = new Dictionary<Type, Func<object, string, object>>
         {
             {
                 typeof (JObject), (value, key) =>
@@ -34,15 +52,5 @@ namespace Stubble.Extensions.JsonNet
                 }
             },
         };
-
-        public static IStubbleBuilder AddJsonNet(this IStubbleBuilder builder)
-        {
-            foreach (var getter in ValueGetters)
-            {
-                builder.AddValueGetter(getter);
-            }
-
-            return builder;
-        }
     }
 }
