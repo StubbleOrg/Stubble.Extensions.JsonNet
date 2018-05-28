@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Stubble.Core.Interfaces;
 using Stubble.Core.Settings;
 
 namespace Stubble.Extensions.JsonNet
 {
     public static class JsonNet
     {
-        public static IRendererSettingsBuilder<IStubbleBuilder<T>> AddJsonNet<T>(this IRendererSettingsBuilder<IStubbleBuilder<T>> builder)
+        public static RendererSettingsBuilder AddJsonNet(this RendererSettingsBuilder builder)
         {
             foreach(var getter in ValueGetters)
             {
@@ -21,20 +17,15 @@ namespace Stubble.Extensions.JsonNet
             return builder;
         }
 
-        public static IStubbleBuilder<T> AddJsonNet<T>(this IStubbleBuilder<T> builder)
-        {
-            var settingsBuilder = builder as IRendererSettingsBuilder<IStubbleBuilder<T>>;
-            settingsBuilder.AddJsonNet();
-            return builder;
-        }
-
-        internal static readonly Dictionary<Type, Func<object, string, object>> ValueGetters = new Dictionary<Type, Func<object, string, object>>
+        internal static readonly Dictionary<Type, RendererSettingsDefaults.ValueGetterDelegate> ValueGetters = new Dictionary<Type, RendererSettingsDefaults.ValueGetterDelegate>
         {
             {
-                typeof (JObject), (value, key) =>
+                typeof (JObject), (value, key, ignoreCase) =>
                 {
                     var token = (JObject)value;
-                    var childToken = token[key];
+                    var comparison =
+                        ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+                    var childToken = token.GetValue(key, comparison);
 
                     if (childToken == null) return null;
 
@@ -48,7 +39,7 @@ namespace Stubble.Extensions.JsonNet
 
                     var jValue = childToken as JValue;
 
-                    return jValue != null ? jValue.Value : null;
+                    return jValue?.Value;
                 }
             },
         };

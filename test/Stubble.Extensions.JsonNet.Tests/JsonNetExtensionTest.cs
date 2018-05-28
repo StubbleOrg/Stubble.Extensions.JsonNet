@@ -14,8 +14,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ foo: \"bar\" }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
@@ -29,8 +29,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ foo: \"bar\" }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
@@ -44,8 +44,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ foo: [ { bar: \"foobar\" } ] }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
@@ -60,8 +60,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ foo: { bar: \"foobar\" } }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
@@ -71,16 +71,17 @@ namespace Stubble.Extensions.JsonNet.Tests
         }
 
         [Theory]
-        [InlineData("{ foo: 1 }", (long)1)] //Ints are always longs in Json.Net
-        [InlineData("{ foo: \"2\" }", "2")]
-        [InlineData("{ foo: 1.01 }", 1.01)]
-        [InlineData("{ foo: null }", null)]
-        [InlineData("{ foo: true }", true)]
-        public void Tokens_Return_Correct_DotNet_Type(string json, object expected)
+        [InlineData("{ foo: 1 }", 1L, false)] //Ints are always longs in Json.Net
+        [InlineData("{ foo: \"2\" }", "2", false)]
+        [InlineData("{ foo: 1.01 }", 1.01, false)]
+        [InlineData("{ foo: null }", null, false)]
+        [InlineData("{ foo: true }", true, false)]
+        [InlineData("{ Foo: 1 }", 1L, true)]
+        public void Tokens_Return_Correct_DotNet_Type(string json, object expected, bool ignoreCase)
         {
             var obj = JsonConvert.DeserializeObject(json);
 
-            var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo");
+            var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo", ignoreCase);
             Assert.Equal(expected, value);
         }
 
@@ -89,7 +90,7 @@ namespace Stubble.Extensions.JsonNet.Tests
         {
             var obj = JsonConvert.DeserializeObject("{ foo: \"2009-02-15T00:00:00Z\" }");
 
-            var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo");
+            var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo", false);
             Assert.Equal(DateTime.Parse("2009-02-15T00:00:00Z").ToUniversalTime(), value);
         }
 
@@ -99,8 +100,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ showme: false, foo: { bar: \"foobar\" } }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
@@ -115,8 +116,8 @@ namespace Stubble.Extensions.JsonNet.Tests
             const string json = "{ showme: false, foo: { bar: \"foobar\" } }";
 
             var stubble = new StubbleBuilder()
-                                .AddJsonNet()
-                                .Build();
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
 
             var obj = JsonConvert.DeserializeObject(json);
 
