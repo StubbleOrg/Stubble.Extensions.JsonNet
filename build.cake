@@ -2,6 +2,7 @@
 
 #tool nuget:?package=Codecov
 #addin nuget:?package=Cake.Codecov
+#addin nuget:?package=Cake.Coverlet
 
 var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
@@ -12,6 +13,7 @@ var runCoverage = Argument<bool>("runCoverage", true);
 var testBinDir = Directory("./test/Stubble.Extensions.JsonNet.Tests/bin");
 var buildDir = Directory("./src/Stubble.Extensions.JsonNet/bin") + Directory(configuration);
 var testBuildDir = testBinDir + Directory(configuration);
+var coverageDirectory = Directory("./coverage-results");
 
 var artifactsDir = Directory("./artifacts/");
 
@@ -21,7 +23,7 @@ Task("Clean")
     CleanDirectory(buildDir);
     CleanDirectory(testBuildDir);
     CleanDirectory("./artifacts");
-    CleanDirectory("./coverage-results");
+    CleanDirectory(coverageDirectory);
     CleanDirectory("./coverage-report");
     CleanDirectory("./test/Stubble.Extensions.JsonNet.Tests/TestResults");
 });
@@ -65,57 +67,33 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    if (runCoverage || AppVeyor.IsRunningOnAppVeyor)
-    {
-        RunCoverageForTestProject("./test/Stubble.Extensions.JsonNet.Tests/Stubble.Extensions.JsonNet.Tests.csproj");
+    var testSettings = new DotNetCoreTestSettings {
+        Configuration = configuration,
+        NoBuild = true,
+        Verbosity = DotNetCoreVerbosity.Quiet,
+        Framework = testFramework,
+        ArgumentCustomization = args =>
+            args.Append("--logger:trx")
+    };
 
-        if (AppVeyor.IsRunningOnAppVeyor)
+    var coverletSettings = new CoverletSettings {
+        CollectCoverage = runCoverage,
+        CoverletOutputFormat = CoverletOutputFormat.opencover,
+        CoverletOutputDirectory = coverageDirectory,
+        CoverletOutputName = $"results-{DateTime.UtcNow:dd-MM-yyyy-HH-mm-ss-FFF}"
+    };
+
+    DotNetCoreTest("./test/Stubble.Extensions.JsonNet.Tests/Stubble.Extensions.JsonNet.Tests.csproj", testSettings, coverletSettings);
+
+    if (AppVeyor.IsRunningOnAppVeyor)
+    {
+        foreach(var file in GetFiles("./test/Stubble.Extensions.JsonNet.Tests/TestResults/*"))
         {
-            foreach(var file in GetFiles("./test/Stubble.Extensions.JsonNet.Tests/TestResults/*"))
-            {
-                AppVeyor.UploadTestResults(file, AppVeyorTestResultsType.MSTest);
-                AppVeyor.UploadArtifact(file);
-            }
+            AppVeyor.UploadTestResults(file, AppVeyorTestResultsType.MSTest);
+            AppVeyor.UploadArtifact(file);
         }
-    } else {
-        testAction("./test/Stubble.Extensions.JsonNet.Tests/Stubble.Extensions.JsonNet.Tests.csproj")(Context);
     }
 });
-
-private Action<ICakeContext> testAction(string projectPath) {
-    return (tool) => {
-        var testSettings = new DotNetCoreTestSettings {
-            Configuration = configuration,
-            NoBuild = true,
-            Verbosity = DotNetCoreVerbosity.Quiet,
-            Framework = testFramework,
-            ArgumentCustomization = args =>
-                args.Append("--logger:trx")
-        };
-
-        tool.DotNetCoreTest(projectPath, testSettings);
-    };
-}
-
-private void RunCoverageForTestProject(string projectPath) {
-    var path = new FilePath("./OpenCover-Experimental/OpenCover.Console.exe").MakeAbsolute(Context.Environment);
-
-    Information(path.ToString());
-
-    CreateDirectory("./coverage-results/");
-    OpenCover(
-        testAction(projectPath),
-        new FilePath(string.Format($"./coverage-results/results-{DateTime.UtcNow:dd-MM-yyyy-HH-mm-ss-FFF}.xml")),
-        new OpenCoverSettings {
-            Register = "user",
-            SkipAutoProps = true,
-            OldStyle = true,
-            ToolPath = path,
-            ReturnTargetCodeOffset = 0
-        }
-        .WithFilter("+[Stubble.Extensions.JsonNet]*")
-    );
-}
 
 Task("Pack")
     .IsDependentOn("Test")
