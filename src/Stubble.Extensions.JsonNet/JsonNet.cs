@@ -33,13 +33,20 @@ namespace Stubble.Extensions.JsonNet
                     {
                         case JTokenType.Array:
                         case JTokenType.Object:
-                        case JTokenType.Property:
                             return childToken;
                     }
 
                     var jValue = childToken as JValue;
 
                     return jValue?.Value;
+                }
+            },
+            {
+                typeof (JProperty), (value, key, ignoreCase) =>
+                {
+                    var childToken = ((JProperty)value).Value;
+                    var jValue = childToken as JValue;
+                    return jValue?.Value ?? childToken;
                 }
             },
         };
