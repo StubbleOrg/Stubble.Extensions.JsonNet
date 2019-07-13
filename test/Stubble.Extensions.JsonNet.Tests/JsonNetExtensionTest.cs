@@ -86,6 +86,22 @@ namespace Stubble.Extensions.JsonNet.Tests
             Assert.Equal("foobar", output);
         }
 
+        [Fact]
+        public void It_Handles_Nested_Objects_With_Variables_Within_Sections()
+        {
+            const string json = "{ \"foo\": { \"bar\": \"foobar\" } }";
+
+            var stubble = new StubbleBuilder()
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
+
+            var obj = JsonConvert.DeserializeObject(json);
+
+            var output = stubble.Render("{{#foo}}{{bar}}{{/foo}}", obj);
+            Assert.NotNull(output);
+            Assert.Equal("foobar", output);
+        }
+
         [Theory]
         [InlineData("{ foo: 1 }", 1L, false)] //Ints are always longs in Json.Net
         [InlineData("{ foo: \"2\" }", "2", false)]
