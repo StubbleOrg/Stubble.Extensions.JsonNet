@@ -78,7 +78,7 @@ Task("Test")
 
     var coverletSettings = new CoverletSettings {
         CollectCoverage = runCoverage,
-        CoverletOutputFormat = CoverletOutputFormat.opencover,
+        CoverletOutputFormat = CoverletOutputFormat.opencover | CoverletOutputFormat.cobertura,
         CoverletOutputDirectory = coverageDirectory,
         CoverletOutputName = $"results-{DateTime.UtcNow:dd-MM-yyyy-HH-mm-ss-FFF}"
     };
@@ -111,25 +111,23 @@ Task("Pack")
 
 Task("CodeCov")
     .IsDependentOn("Pack")
+    .WithCriteria(BuildSystem.IsRunningOnAzurePipelinesHosted && IsRunningOnWindows())
     .Does(() =>
 {
-    var coverageFiles = GetFiles("./coverage-results/*.xml")
+    var coverageFiles = GetFiles("./coverage-results/*.opencover.xml")
         .Select(f => f.FullPath)
         .ToArray();
 
     var settings = new CodecovSettings();
+    var token = EnvironmentVariable("CODECOV_REPO_TOKEN");
+    settings.Token = token;
 
-    if (AppVeyor.IsRunningOnAppVeyor) {
-        var token = EnvironmentVariable("CODECOV_REPO_TOKEN");
-        settings.Token = token;
+    foreach(var file in coverageFiles)
+    {
+        settings.Files = new [] { file };
 
-        foreach(var file in coverageFiles)
-        {
-            settings.Files = new [] { file };
-
-            // Upload coverage reports.
-            Codecov(settings);
-        }
+        // Upload coverage reports.
+        Codecov(settings);
     }
 });
 
@@ -147,6 +145,6 @@ Task("Travis")
     .IsDependentOn("Test");
 
 Task("Default")
-    .IsDependentOn("Pack");
+    .IsDependentOn("CodeCov");
 
 RunTarget(target);

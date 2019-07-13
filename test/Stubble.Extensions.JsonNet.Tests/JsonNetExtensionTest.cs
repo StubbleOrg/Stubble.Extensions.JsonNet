@@ -55,6 +55,22 @@ namespace Stubble.Extensions.JsonNet.Tests
         }
 
         [Fact]
+        public void It_Handles_Primative_Arrays_Correctly()
+        {
+            const string json = "{ foo: [ \"a\", \"b\", \"c\" ] }";
+
+            var stubble = new StubbleBuilder()
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
+
+            var obj = JsonConvert.DeserializeObject(json);
+
+            var output = stubble.Render("{{#foo}}{{.}}{{/foo}}", obj);
+            Assert.NotNull(output);
+            Assert.Equal("abc", output);
+        }
+
+        [Fact]
         public void It_Handles_Nested_Objects()
         {
             const string json = "{ foo: { bar: \"foobar\" } }";
