@@ -111,7 +111,7 @@ Task("Pack")
 
 Task("CodeCov")
     .IsDependentOn("Pack")
-    .WithCriteria(BuildSystem.IsRunningOnAzurePipelinesHosted)
+    .WithCriteria(BuildSystem.IsRunningOnAzurePipelinesHosted && IsRunningOnWindows())
     .Does(() =>
 {
     var coverageFiles = GetFiles("./coverage-results/*.opencover.xml")
