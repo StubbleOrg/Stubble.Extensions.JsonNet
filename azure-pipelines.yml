@@ -17,7 +17,7 @@ jobs:
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'VSTest'
-        testResultsFiles: '''**/*.trx'
+        testResultsFiles: '**/*.trx'
         mergeTestResults: true
     - task: PublishBuildArtifacts@1
       inputs:
