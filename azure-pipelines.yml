@@ -19,7 +19,6 @@ pool:
   vmImage: $(imageName)
 
 steps:
-- task: cake-build.cake.cake-build-task.Cake@0
-  displayName: 'Build using Cake'
+- task: Bash@3
   inputs:
-    verbosity: Normal
+    filePath: 'build.sh'
