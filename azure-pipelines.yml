@@ -16,6 +16,7 @@ jobs:
         filePath: 'build.ps1'
       env:
         CODECOV_REPO_TOKEN: $(CODECOV_REPO_TOKEN)
+        CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK: true
     - task: PublishTestResults@2
       condition: succeededOrFailed()
       inputs:
@@ -42,6 +43,7 @@ jobs:
         filePath: 'build.sh'
       env:
         CODECOV_REPO_TOKEN: $(CODECOV_REPO_TOKEN)
+        CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK: true
         
 - job: Linux
   pool:
@@ -52,3 +54,4 @@ jobs:
         filePath: 'build.sh'
       env:
         CODECOV_REPO_TOKEN: $(CODECOV_REPO_TOKEN)
+        CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK: true
