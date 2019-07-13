@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CC4D5ED9-FE1C-4F69-B392-EAEB48E6D850}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
+		azure-pipelines.yml = azure-pipelines.yml
 		build.cake = build.cake
 		readme.md = readme.md
 		src\Stubble.Extensions.JsonNet\version.json = src\Stubble.Extensions.JsonNet\version.json
@@ -43,5 +44,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BFA1B90F-BB5A-466D-AA4E-7D473632134D} = {84A5C938-F00D-4036-8AB2-9E92230292D3}
 		{6330DBE7-3159-42E7-980A-BA758CDB5E23} = {ECF797BD-6141-4975-A00B-5C7F76909F97}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E10CEF8F-D450-454A-87B5-CE3A86CEE896}
 	EndGlobalSection
 EndGlobal
