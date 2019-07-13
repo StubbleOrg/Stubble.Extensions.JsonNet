@@ -6,19 +6,27 @@
 trigger:
 - master
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-latest'
-    mac:
-      imageName: 'macOS-10.14'
-    windows:
-      imageName: 'windows-2019'
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+    - task: PowerShell@2
+      inputs:
+        filePath: 'build.ps1'
 
-pool:
-  vmImage: $(imageName)
-
-steps:
-- task: Bash@3
-  inputs:
-    filePath: 'build.sh'
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.14'
+  steps:
+    - task: Bash@3
+      inputs:
+        filePath: 'build.sh'
+        
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+    - task: Bash@3
+      inputs:
+        filePath: 'build.sh'
