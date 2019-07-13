@@ -15,10 +15,16 @@ jobs:
       inputs:
         filePath: 'build.ps1'
     - task: PublishTestResults@2
+      condition: succeededOrFailed()
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '**/*.trx'
         mergeTestResults: true
+    - task: PublishCodeCoverageResults@1
+      condition: succeededOrFailed()
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: 'coverage-results/*.cobertura.xml'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: 'artifacts/'
