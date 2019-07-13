@@ -41,9 +41,6 @@ jobs:
     - task: Bash@3
       inputs:
         filePath: 'build.sh'
-      env:
-        CODECOV_REPO_TOKEN: $(CODECOV_REPO_TOKEN)
-        CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK: true
         
 - job: Linux
   pool:
@@ -52,6 +49,3 @@ jobs:
     - task: Bash@3
       inputs:
         filePath: 'build.sh'
-      env:
-        CODECOV_REPO_TOKEN: $(CODECOV_REPO_TOKEN)
-        CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK: true
