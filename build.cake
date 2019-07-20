@@ -1,8 +1,8 @@
-#tool "nuget:?package=ReportGenerator"
+#tool "nuget:?package=ReportGenerator&version=4.2.10"
 
-#tool nuget:?package=Codecov
-#addin nuget:?package=Cake.Codecov
-#addin nuget:?package=Cake.Coverlet
+#tool nuget:?package=Codecov&version=1.5.0
+#addin nuget:?package=Cake.Codecov&version=0.6.0
+#addin nuget:?package=Cake.Coverlet&version=2.3.4
 
 var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
