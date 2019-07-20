@@ -199,3 +199,4 @@ FakesAssemblies/
 tools/*
 coverage-results/*
 coverage-report/*
+.vscode/*
