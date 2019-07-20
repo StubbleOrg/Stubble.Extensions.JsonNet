@@ -117,32 +117,24 @@ Task("CodeCov")
     var coverageFiles = GetFiles("./coverage-results/*.opencover.xml")
         .Select(f => f.FullPath)
         .ToArray();
-
-    var settings = new CodecovSettings();
     var token = EnvironmentVariable("CODECOV_REPO_TOKEN");
-    settings.Token = token;
 
-    foreach(var file in coverageFiles)
+    var settings = new CodecovSettings
     {
-        settings.Files = new [] { file };
+        Token = token,
+        Files = coverageFiles
+    };
 
-        // Upload coverage reports.
-        Codecov(settings);
-    }
+    // Upload coverage reports.
+    Codecov(settings);
 });
 
 Task("CoverageReport")
     .IsDependentOn("Test")
     .Does(() =>
 {
-    ReportGenerator("./coverage-results/*.xml", "./coverage-report/");
+    ReportGenerator("./coverage-results/*opencover.xml", "./coverage-report/");
 });
-
-Task("AppVeyor")
-    .IsDependentOn("CodeCov");
-
-Task("Travis")
-    .IsDependentOn("Test");
 
 Task("Default")
     .IsDependentOn("CodeCov");
