@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Stubble.Core.Settings;
@@ -13,7 +14,6 @@ namespace Stubble.Extensions.JsonNet
             {
                 builder.AddValueGetter(getter.Key, getter.Value);
             }
-
             return builder;
         }
 
@@ -32,8 +32,13 @@ namespace Stubble.Extensions.JsonNet
                     switch (childToken.Type)
                     {
                         case JTokenType.Array:
-                        case JTokenType.Object:
                             return childToken;
+                        case JTokenType.Object:
+                            {
+                                IDictionary properties
+                                    = new Dictionary<string, JToken>((JObject)childToken);
+                                return properties;
+                            }
                     }
 
                     var jValue = childToken as JValue;
