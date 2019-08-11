@@ -13,6 +13,7 @@ trigger:
   paths:
     exclude:
     - "*.md"
+    - "version.json"
 
 jobs:
 - job: Windows
