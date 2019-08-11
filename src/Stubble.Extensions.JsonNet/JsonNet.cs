@@ -14,6 +14,8 @@ namespace Stubble.Extensions.JsonNet
                 builder.AddValueGetter(getter.Key, getter.Value);
             }
 
+            builder.AddSectionBlacklistType(typeof(JObject));
+
             return builder;
         }
 
