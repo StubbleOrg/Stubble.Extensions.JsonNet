@@ -157,5 +157,21 @@ namespace Stubble.Extensions.JsonNet.Tests
             Assert.NotNull(output);
             Assert.Equal("foobar", output);
         }
+
+        [Fact]
+        public void It_Handles_Section_Correctly()
+        {
+            const string json = "{ foo:  { bar: \"foobar\", \"zar\": \"zoo\"  } }";
+
+            var stubble = new StubbleBuilder()
+                .Configure(settings => settings.AddJsonNet())
+                .Build();
+
+            var obj = JsonConvert.DeserializeObject(json);
+
+            var output = stubble.Render("{{#foo}}{{bar}},{{zar}}{{/foo}}", obj);
+            Assert.NotNull(output);
+            Assert.Equal("foobar,zoo", output);
+        }
     }
 }
