@@ -5,7 +5,7 @@
     <Authors>Alex McAuliffe</Authors>
     <LangVersion>7.3</LangVersion>
     <Description>Extensions to Stubble adding ValueGetters for Newtonsoft Json.Net</Description>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageTags>template;mustache;text;generation;fast;newtonsoft;json.net;extension;stubble-extension</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StubbleOrg/Stubble.Extensions.JsonNet</RepositoryUrl>
@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Stubble.Core" Version="1.4.12" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.0.25" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.0.26" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
