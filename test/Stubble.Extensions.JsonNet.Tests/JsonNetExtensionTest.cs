@@ -106,7 +106,7 @@ namespace Stubble.Extensions.JsonNet.Tests
         [InlineData("{ foo: 1 }", 1L, false)] //Ints are always longs in Json.Net
         [InlineData("{ foo: \"2\" }", "2", false)]
         [InlineData("{ foo: 1.01 }", 1.01, false)]
-        [InlineData("{ foo: null }", null, false)]
+        [InlineData("{ foo: null }", "", false)] // returning null here would trigger other value getters
         [InlineData("{ foo: true }", true, false)]
         [InlineData("{ Foo: 1 }", 1L, true)]
         public void Tokens_Return_Correct_DotNet_Type(string json, object expected, bool ignoreCase)
@@ -114,6 +114,21 @@ namespace Stubble.Extensions.JsonNet.Tests
             var obj = JsonConvert.DeserializeObject(json);
 
             var value = JsonNet.ValueGetters[typeof(JObject)](obj, "foo", ignoreCase);
+            Assert.Equal(expected, value);
+        }
+        
+        [Theory]
+        [InlineData("{ foo: 1 }", 1L)]
+        [InlineData("{ foo: \"2\" }", "2")]
+        [InlineData("{ foo: 1.01 }", 1.01)]
+        [InlineData("{ foo: null }", "")]
+        [InlineData("{ foo: true }", true)]
+        public void It_Handles_JProperty_Correctly(string json, object expected)
+        {
+            var obj = JsonConvert.DeserializeObject(json);
+            var property = (obj as JObject)?.Property("foo");
+
+            var value = JsonNet.ValueGetters[typeof(JProperty)](property, "foo", false);
             Assert.Equal(expected, value);
         }
 
