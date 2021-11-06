@@ -38,6 +38,11 @@ namespace Stubble.Extensions.JsonNet
                             return childToken;
                     }
 
+                    if (childToken.Type == JTokenType.Null)
+                    {
+                        return string.Empty;
+                    }
+
                     var jValue = childToken as JValue;
 
                     return jValue?.Value;
@@ -46,9 +51,9 @@ namespace Stubble.Extensions.JsonNet
             {
                 typeof (JProperty), (value, key, ignoreCase) =>
                 {
-                    var childToken = ((JProperty)value).Value;
-                    var jValue = childToken as JValue;
-                    return jValue?.Value ?? childToken;
+                    var valueOfProperty = ((JProperty) value)?.Value;
+                    if (!(valueOfProperty is JValue jValue)) return null;
+                    return valueOfProperty.Type == JTokenType.Null ? string.Empty : jValue.Value;
                 }
             },
         };
