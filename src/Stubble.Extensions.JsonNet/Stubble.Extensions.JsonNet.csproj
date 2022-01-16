@@ -4,6 +4,7 @@
     <Copyright>Copyright © 2015</Copyright>
     <Authors>Alex McAuliffe</Authors>
     <LangVersion>7.3</LangVersion>
+    <PackageId>Stubble.Extensions.JsonNet-private</PackageId>
     <Description>Extensions to Stubble adding ValueGetters for Newtonsoft Json.Net</Description>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageTags>template;mustache;text;generation;fast;newtonsoft;json.net;extension;stubble-extension</PackageTags>
@@ -14,12 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Stubble.Core" Version="1.9.3" />
+    <PackageReference Include="Stubble.Core-private" Version="1.10.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.3.37" PrivateAssets="All" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.255" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
